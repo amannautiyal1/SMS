@@ -1,6 +1,7 @@
 component persistent="true" table="users" entityname="User"
 {
 
+    property name="bcrypt" inject="@bcrypt";
 	property name="id" fieldtype="id" column="id" generator="native" setter="false";
     property name="username" columntype="varchar(255)" unique="true";
     property name="password"  columntype="varchar(255)";
@@ -13,8 +14,7 @@ component persistent="true" table="users" entityname="User"
 		"username"  : { required = true, validator="UniqueValidator@cborm" }
 	};
 
-    // Required method for IAuthUser interface
-    function hasPermission(required permission) {
-        return true; // Implement your permission logic here
+    public void function preInsert(){
+        variables.password = bcrypt.hashPassword(variables.password);
     }
 }
