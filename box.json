@@ -1,0 +1,62 @@
+{
+    "name":"StudentManagementSystem",
+    "version":"1.0.0",
+    "author":"You",
+    "location":"forgeboxStorage",
+    "slug":"studentmanagementsystem",
+    "createPackageDirectory":false,
+    "type":"mvc",
+    "keywords":"",
+    "homepage":"",
+    "documentation":"",
+    "repository":{
+        "type":"",
+        "url":""
+    },
+    "bugs":"",
+    "shortDescription":"",
+    "contributors":[],
+    "ignore":[],
+    "devDependencies":{
+        "testbox":"^5.0.0",
+        "commandbox-dotenv":"*",
+        "commandbox-cfconfig":"*",
+        "commandbox-cfformat":"*",
+        "cbdebugger":"^4.3.0+5"
+    },
+    "installPaths":{
+        "coldbox":"coldbox/",
+        "testbox":"testbox/",
+        "cborm":"modules/cborm/",
+        "cbdebugger":"modules/cbdebugger/",
+        "route-visualizer":"modules/route-visualizer/",
+        "cfconfig-services":"modules/cfconfig-services/",
+        "cbsecurity":"modules/cbsecurity/",
+        "jwt-cfml":"modules/jwtcfml/",
+        "BCrypt":"modules/BCrypt/",
+        "cbauth":"modules/cbauth/"
+    },
+    "dependencies":{
+        "coldbox":"^7.0.0",
+        "cborm":"^4.5.0+2",
+        "route-visualizer":"^2.2.0-snapshot",
+        "cfconfig-services":"^2.3.2",
+        "cbsecurity":"^3.4.3+5",
+        "jwt-cfml":"^1.2.0",
+        "BCrypt":"^3.1.0+4",
+        "cbauth":"^6.1.0"
+    },
+    "scripts":{
+        "postInstall":"pathExists .env || cp .env.example .env && package set ignore=[]",
+        "format":"cfformat run config/,handlers/,interceptors/,models/,modules_app/,tests/specs/,*.cfc ./.cfformat.json --overwrite",
+        "format:check":"cfformat check config/,handlers/,interceptors/,models/,modules_app/,tests/specs/,*.cfc ./.cfformat.json",
+        "format:watch":"cfformat watch path='config/,handlers/,interceptors/,models/,modules_app/,tests/specs/,*.cfc' settingsPath='.cfformat.json'",
+        "docker:build":"!docker build --no-cache -t my-coldbox-app -f ./build/Dockerfile ./",
+        "docker:run":"!docker run -it -p 8080:8080 my-coldbox-app",
+        "docker:bash":"!docker run -it my-coldbox-app /bin/bash",
+        "docker:stack":"!docker compose -f build/docker-compose.yaml ${1}"
+    },
+    "testbox":{
+        "runner":"/tests/runner.cfm"
+    }
+}
