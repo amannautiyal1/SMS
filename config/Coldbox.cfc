@@ -22,6 +22,7 @@ component {
 			reinitPassword           : "",
 			reinitKey                : "fwreinit",
 			handlersIndexAutoReload  : true,
+			debugMode : true,
 			// Implicit Events
 			defaultEvent             : "",
 			requestStartHandler      : "Main.onRequestStart",
