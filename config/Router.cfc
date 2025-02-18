@@ -42,6 +42,8 @@ component {
 
 		route("/register-user").to("auth.registerUser");
 
+		route("/login-user").to("auth.loginUser");
+
 		 // Protected routes
 		 route("/home").to("home.index");
 

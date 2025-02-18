@@ -4,7 +4,7 @@ component
 {
     // Dependencies
     // property name="jwtService" inject="@jwt-cfml";
-    property name="bcrypt" inject="@BCrypt";
+    property name="bcrypt" inject="@bcrypt";
     property name = "userService" inject="entityService:User"
     // property name="jwtService" inject="@jwt-cfml";   // Or inject your own JWT service here
 
@@ -52,7 +52,9 @@ component
      * Retrieve a user by username
      */
     function retrieveUserByUsername(required username) {
-        return findWhere({username = arguments.username});
+        var user = entityLoad("User", {"username": arguments.username});
+
+        return user;
     }
 
     /**
@@ -85,5 +87,9 @@ component
         } catch(any e) {
             return false;
         }
+    }
+
+    function validatePassword(required string password, required string storedPasswordHash) {
+        return bcrypt.checkPassword(arguments.password, arguments.storedPasswordHash); // Validate password hash
     }
 }

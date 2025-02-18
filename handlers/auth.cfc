@@ -52,11 +52,6 @@ component extends="coldbox.system.EventHandler"{
             // Create user using our service method
             var user = userService.createUser(event, rc, prc);
             
-            // Log the user in
-            // authService.authenticate(userData.username, userData.password);
-            
-            // Generate JWT token
-            // var token = userService.generateToken(user);
             
             // Return success response with token
             event.renderData(type="json", data={
@@ -71,6 +66,52 @@ component extends="coldbox.system.EventHandler"{
                 "message": e.message
             }, statusCode=500);
         }
+    }
+	function loginUser(event, rc, prc) {
+        try {
+            // Get the form data from the request
+            var username = trim(rc.username);
+            var password = trim(rc.password);
+
+            // Retrieve user by username
+            var user = userService.retrieveUserByUsername(username);
+            
+            if (arrayLen(user) == 0) {
+                // If user is not found, return error
+                return event.renderData(type="json", data={
+					"status": "error",
+					"message": "User not found"
+				}, statusCode=500);
+            }
+			user=user[1];
+            // Check if the provided password matches the stored hash
+            var isPasswordValid = userService.validatePassword(password, user.getPassword());
+
+            if (!isPasswordValid) {
+                // If the password doesn't match, return error
+                return event.renderData(type="json", data={
+					"status": "error",
+					"message": "Password invalid",
+					"password1": password,
+					"password2": user.getPassword()
+				}, statusCode=500);
+            }
+
+            // Generate JWT token if password is valid
+            // var token = userService.generateToken(user);
+
+            // Return success with JWT token
+            return event.renderData(type="json", data={
+				status="success", token=isPasswordValid
+			},statusCode=200);
+
+        } catch (any e) {
+            // Handle any errors
+            return event.renderData(type="json", data={
+				"status": "error",
+				"message": e.message
+			}, statusCode=500);
+		}
     }
 }
 
