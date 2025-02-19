@@ -48,14 +48,7 @@ component
 		return rc;
 	}
 
-    /**
-     * Retrieve a user by username
-     */
-    function retrieveUserByUsername(required username) {
-        var user = entityLoad("User", {"username": arguments.username});
-
-        return user;
-    }
+    
 
     /**
      * Retrieve a user by ID
@@ -91,5 +84,25 @@ component
 
     function validatePassword(required string password, required string storedPasswordHash) {
         return bcrypt.checkPassword(arguments.password, arguments.storedPasswordHash); // Validate password hash
+    }
+    /**
+     * Retrieve a user by username
+     */
+    function retrieveUserByUsername(required username) {
+        var user = entityLoad("User", {"username": arguments.username});
+
+        return user;
+    }
+
+    function getAllStudents(){
+        // var user = entityLoad("User", {"role": "student"});
+        var user = userService// List all as array of objects
+        .list( asQuery=false)
+        // Map the entities to mementos
+        .map( function( item ){
+            return item.getMemento( includes="id" );
+        } );
+        // students = userService.findWhere(entityName="User", criteria={role= "admin"});
+        return user;
     }
 }

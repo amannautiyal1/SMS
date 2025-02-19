@@ -44,6 +44,8 @@ component {
 
 		route("/login-user").to("auth.loginUser");
 
+		route("/students").to("student.getAllStudents")
+
 		 // Protected routes
 		 route("/home").to("home.index");
 
