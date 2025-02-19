@@ -116,23 +116,26 @@
 </head>
 <body>
 
-<div class="container">
-    <h2>Welcome to the Dashboard</h2>
-    <h3>Students</h3>
-    <button id="addStudentButton">Add Student</button>
-    <table id="studentsTable">
-        <thead>
-            <tr>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
+    <div class="container">
+        <h2>Welcome to the Dashboard</h2>
+        <h3>Students</h3>
+        <button id="addStudentButton">Add Student</button>
+        <button id="generatePdfButton">Generate PDF</button>
+        <table id="studentsTable">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
         <tbody>
             <!-- Students will be dynamically populated here -->
         </tbody>
     </table>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
 
 <script>
     // Fetch all students
@@ -160,6 +163,19 @@
         .catch(error => console.log('Error:', error));
     }
 
+    document.getElementById('generatePdfButton').addEventListener('click', function() {
+        var element = document.getElementById('studentsTable'); // Get the table element
+
+        // Convert the table into a PDF
+        html2pdf(element, {
+            margin:       10,
+            filename:     'students_report.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { dpi: 192, letterRendering: true },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        });
+    });
+    
     // Edit Student Function
     function editStudent(studentId) {
         // You can open an edit form or redirect to edit page
