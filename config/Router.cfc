@@ -46,6 +46,7 @@ component {
 
 		route("/students").to("student.getAllStudents")
 
+		route("/generate-pdf").to("student.generatePdf");
 		 // Protected routes
 		 route("/home").to("home.index");
 

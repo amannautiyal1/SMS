@@ -121,6 +121,7 @@
         <h3>Students</h3>
         <button id="addStudentButton">Add Student</button>
         <button id="generatePdfButton">Generate PDF</button>
+        <button id="generatePdfButton2">Generate PDF using CF</button>
         <table id="studentsTable">
             <thead>
                 <tr>
@@ -163,6 +164,8 @@
         .catch(error => console.log('Error:', error));
     }
 
+    fetchStudents();
+
     document.getElementById('generatePdfButton').addEventListener('click', function() {
         var element = document.getElementById('studentsTable'); // Get the table element
 
@@ -175,7 +178,18 @@
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
         });
     });
-    
+
+    // Generate PDF of all students
+    document.getElementById('generatePdfButton2').addEventListener('click', function() {
+        fetch('/generate-pdf', {
+            method: 'GET', // Or POST if you need to send data
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('data : ',data);
+    })
+});
+
     // Edit Student Function
     function editStudent(studentId) {
         // You can open an edit form or redirect to edit page
@@ -197,7 +211,6 @@
     }
 
     // Call to load all students
-    fetchStudents();
 </script>
 
 </body>
