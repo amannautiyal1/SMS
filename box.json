@@ -43,7 +43,7 @@
         "cfconfig-services":"^2.3.2",
         "cbsecurity":"^3.4.3+5",
         "jwt-cfml":"^1.2.0",
-        "BCrypt":"^3.1.0+4",
+        "BCrypt":"3.2.0+1",
         "cbauth":"^6.1.0"
     },
     "scripts":{
