@@ -1,6 +1,12 @@
 component extends="coldbox.system.EventHandler"{
 	property name="studentService" inject="models/services/UserService";
     
+    // Email configuration
+    variables.SMTP_SERVER = "smtp.gmail.com";
+    variables.SMTP_PORT = "587";
+    variables.SMTP_USERNAME = "pulukuriabhiram2024@gmail.com";
+    variables.SMTP_PASSWORD = "tebb sidt iyjd aket"; // Replace with actual app password
+    variables.FROM_EMAIL = "pulukuriabhiram2024@gmail.com";
     
     /**
      * index
@@ -69,6 +75,33 @@ component extends="coldbox.system.EventHandler"{
             writeOutput(#pdfContent#)
         };
     
+        // Email the generated PDF
+        var emailSubject = "Students Report - #dateFormat(currentDateTime, 'yyyy-MM-dd')#";
+        var emailTo = "aman.nautiyal@bizacuity.com"; // Replace with actual recipient email
+        var emailFrom = "sender@example.com";  // Replace with sender email
+        var emailMessage = "Please find the attached PDF report for the students.";
+
+        // Sending email with PDF attachment
+        cfmail(
+            to="#emailTo#",
+            from="#emailFrom#",
+            subject="#emailSubject#",
+            type="html",
+            server = variables.SMTP_SERVER,
+            username = variables.SMTP_USERNAME,
+            password = variables.SMTP_PASSWORD,
+            port = variables.SMTP_PORT,
+            useTLS = true
+        ) {
+            // writeOutput("#emailMessage#");
+            cfmailparam(
+                file="#fullPath#",
+                disposition="attachment",
+                type = "application/pdf"
+            );
+        }
+
+
         // Return the generated PDF path and success message as a JSON response
         return event.renderData(type="json", data={ 
             "success": true, 
