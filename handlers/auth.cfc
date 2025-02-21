@@ -5,6 +5,7 @@
 component extends="coldbox.system.EventHandler"{
 	property name="userService" inject="models/services/UserService";
 	property name="authService" inject="authenticationService@cbauth";
+    property name="jwt" inject="@jwtcfml";  // Injecting the JWT package
 
 
 	this.prehandler_only 	= "";
@@ -27,7 +28,7 @@ component extends="coldbox.system.EventHandler"{
 	 * login
 	 */
 	function login(event,rc,prc){
-		// event.setView("auth/login")
+		event.setView("auth/login")
 	}
 	
 
@@ -91,18 +92,31 @@ component extends="coldbox.system.EventHandler"{
                 // If the password doesn't match, return error
                 return event.renderData(type="json", data={
 					"status": "error",
-					"message": "Password invalid",
-					"password1": password,
-					"password2": user.getPassword()
+					"message": "Password invalid"
 				}, statusCode=500);
             }
+
+            var payload = {
+                "sub": user.getId(),          // Subject (User ID)
+                "username": user.getUsername(), // Username
+                "roles": user.getRole(),     // User roles (e.g., 'admin', 'student')
+                "iat": now()  ,   // Issued at time
+                "exp": dateAdd("h", 2, now()) // Expiration time (2 hours)
+            };
+
+            var secretKey = "AMAN";
+
+            var jwtToken = jwt.encode(payload, secretKey,"HS512");
+
+            cookie.jwtToken={value=jwtToken,  path="/", expires=30, httponly="yes", encodevalue="yes" }
+
 
             // Generate JWT token if password is valid
             // var token = userService.generateToken(user);
 
             // Return success with JWT token
             return event.renderData(type="json", data={
-				status="success", token=isPasswordValid
+				status="success", token=jwtToken
 			},statusCode=200);
 
         } catch (any e) {

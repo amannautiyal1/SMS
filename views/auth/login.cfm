@@ -97,14 +97,10 @@
                 type: 'POST',
                 data: formData,
                 success: function(response) {
-                    console.log('response : ', response);
                     // Show success message
-                    if (response.status === 'success') {
-                        // Store the JWT token in localStorage or sessionStorage
-                        // localStorage.setItem('authToken', response.token); // Store JWT token
-
+                    if (response.STATUS === 'success') {
                         // Redirect to the home screen
-                        // window.location.href = '/home';  // Redirect to the home page after login
+                        window.location.href = '/student';  // Redirect to the home page after login
                     }
                 },
                 error: function(xhr, status, error) {

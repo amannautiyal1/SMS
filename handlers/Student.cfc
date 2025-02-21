@@ -1,5 +1,6 @@
     component extends="coldbox.system.EventHandler"{
         property name="studentService" inject="models/services/UserService";
+        property name="jwt" inject="@jwtcfml";  // Injecting the JWT package
         
         // Email configuration
         variables.SMTP_SERVER = "smtp.gmail.com";
@@ -16,7 +17,28 @@
         }
         
         function getAllStudents(){
-            return studentService.getAllStudents();
+            //validate -> later move it to interceptor
+            var tokenValue=cookie.jwtToken;
+            if(len(trim(tokenValue)) == 0){
+                return event.renderData(type="json", data={
+                    "status": "error",
+                    "message": "token not present"
+                }, statusCode=401); 
+            }
+            var decodedValue = jwt.decode(tokenValue,"AMAN","HS512");
+            if (isDefined("decodedValue") AND NOT structIsEmpty(decodedValue)) {
+                if(decodedValue.roles!=="admin")return event.renderData(type="json", data={
+                    "status": "error",
+                    "message": "you can not see list of students"
+                }, statusCode=401); 
+                return studentService.getAllStudents();
+            }
+            else{
+                return event.renderData(type="json", data={
+                    "status": "error",
+                    "message": "you can not see list of students"
+                }, statusCode=401); 
+            }
         }
 
         function createStudent(event, rc, prc) {

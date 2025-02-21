@@ -124,7 +124,15 @@ component {
 		 * --------------------------------------------------------------------------
 		 * Remember that the order of declaration is the order they will be registered and fired
 		 */
-		interceptors = [];
+		interceptors = [
+			{
+				class   = "interceptors.authentication", //by default this should be interceptors.yourcfcname  
+				name    = "authentication",
+				properties = {
+					// configuration
+				}
+			}
+		];
 
 		/**
 		 * --------------------------------------------------------------------------
