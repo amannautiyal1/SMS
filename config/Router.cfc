@@ -4,6 +4,7 @@
  * https://coldbox.ortusbooks.com/the-basics/routing
  */
 component {
+	property name="log" inject="logbox:logger";
 
 	function configure(){
 		/**
@@ -24,6 +25,7 @@ component {
 
 		// A nice healthcheck route example
 		route( "/healthcheck", function( event, rc, prc ){
+			log.info( message="Hi all good" )
 			return "Ok!";
 		} );
 
@@ -46,7 +48,7 @@ component {
 
 		route("/students").to("student.getAllStudents")
 
-		route("/generate-pdf").to("student.generatePdf");
+		route("/generate-pdf/:username").to("student.generatePdf");
 		 // Protected routes
 		 route("/home").to("home.index");
 

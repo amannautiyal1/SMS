@@ -12,6 +12,7 @@ build/.db/**
 # logs + tests
 logs/**
 tests/results/**
+logbox
 
 # npm
 **/node_modules/*

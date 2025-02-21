@@ -63,6 +63,7 @@ component {
 	this.mappings[ "/modules" ] = COLDBOX_APP_ROOT_PATH & "modules";
 	this.mappings[ "/models" ] = COLDBOX_APP_ROOT_PATH & "models";
 	this.mappings[ "/cborm" ] = COLDBOX_APP_ROOT_PATH & "modules/cborm";
+	this.mappings[ "/logbox" ] = COLDBOX_APP_ROOT_PATH & "logbox";
 
 	/**
 	 * --------------------------------------------------------------------------

@@ -34,7 +34,8 @@
         "cbsecurity":"modules/cbsecurity/",
         "jwt-cfml":"modules/jwtcfml/",
         "BCrypt":"modules/BCrypt/",
-        "cbauth":"modules/cbauth/"
+        "cbauth":"modules/cbauth/",
+        "logbox":"logbox/"
     },
     "dependencies":{
         "coldbox":"^7.0.0",
@@ -44,7 +45,8 @@
         "cbsecurity":"^3.4.3+5",
         "jwt-cfml":"^1.2.0",
         "BCrypt":"3.2.0+1",
-        "cbauth":"^6.1.0"
+        "cbauth":"^6.1.0",
+        "logbox":"^7.3.0+16"
     },
     "scripts":{
         "postInstall":"pathExists .env || cp .env.example .env && package set ignore=[]",

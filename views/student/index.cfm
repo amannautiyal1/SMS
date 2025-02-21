@@ -121,7 +121,6 @@
         <h3>Students</h3>
         <button id="addStudentButton">Add Student</button>
         <button id="generatePdfButton">Generate PDF</button>
-        <button id="generatePdfButton2">Generate PDF using CF</button>
         <table id="studentsTable">
             <thead>
                 <tr>
@@ -155,7 +154,7 @@
                             <td>${student.email}</td>
                             <td>
                                 <button onclick="editStudent(${student.id})">Edit</button>
-                                <button onclick="generateReport(${student.id})">Generate Report</button>
+                                <button onclick="generateAdmissionLetter('${student.username}')">Generate Admission Letter</button>
                             </td>
                         </tr>`;
                 tbody.innerHTML += row;
@@ -165,6 +164,14 @@
     }
 
     fetchStudents();
+
+    function generateAdmissionLetter(id) {
+        fetch(`/generate-pdf/${id}`, {
+            method: 'GET', 
+        })
+        .then(response => console.log('response : ',response))
+        .catch(error => console.log('Error generating admission letter:', error));
+    }
 
     document.getElementById('generatePdfButton').addEventListener('click', function() {
         var element = document.getElementById('studentsTable'); // Get the table element
