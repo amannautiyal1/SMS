@@ -97,7 +97,7 @@ component extends="coldbox.system.EventHandler"{
             }
 
             var payload = {
-                "sub": user.getId(),          // Subject (User ID)
+                "id": user.getId(),          // Subject (User ID)
                 "username": user.getUsername(), // Username
                 "roles": user.getRole(),     // User roles (e.g., 'admin', 'student')
                 "iat": now()  ,   // Issued at time
@@ -109,10 +109,6 @@ component extends="coldbox.system.EventHandler"{
             var jwtToken = jwt.encode(payload, secretKey,"HS512");
 
             cookie.jwtToken={value=jwtToken,  path="/", expires=30, httponly="yes", encodevalue="yes" }
-
-
-            // Generate JWT token if password is valid
-            // var token = userService.generateToken(user);
 
             // Return success with JWT token
             return event.renderData(type="json", data={
